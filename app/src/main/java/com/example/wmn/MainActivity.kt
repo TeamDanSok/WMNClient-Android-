@@ -1,5 +1,6 @@
 package com.example.wmn
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -20,6 +21,11 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             binding.message.text.clear()
             //채팅화면으로 전환시키면 됨
+
+        }
+        binding.moveScreen.setOnClickListener {
+            val intent = Intent(this@MainActivity, ListActivity::class.java)
+            startActivity(intent)
         }
     }
 }
