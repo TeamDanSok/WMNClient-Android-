@@ -58,7 +58,7 @@
         android:background="@drawable/micbutton"
         android:contentDescription="@android:string/VideoView_error_button"
         android:drawableTop="@drawable/biglogo"
-        android:padding="22dp"
+        android:padding="38dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />

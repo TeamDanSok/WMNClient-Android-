@@ -19,5 +19,9 @@ class StartActivity : AppCompatActivity() {
             val intent = Intent(this@StartActivity, MainActivity::class.java)
             startActivity(intent)
         }
+        binding.textView2.setOnClickListener {
+            val intent = Intent(this@StartActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
