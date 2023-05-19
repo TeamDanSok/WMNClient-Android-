@@ -13,11 +13,6 @@
         android:layout_height="wrap_content"
         android:autoLink="web"
         android:background="@drawable/bot_chat_background"
-        android:linksClickable="true"
-        android:padding="10dp"
-        android:text="안녕하세요."
-        android:textColor="@color/bot_chat_font_color"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 

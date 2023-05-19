@@ -5,7 +5,6 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <TextView
         android:id="@+id/txt_message"
         android:layout_width="wrap_content"
@@ -13,12 +12,8 @@
         android:layout_marginEnd="10dp"
         android:autoLink="web"
         android:background="@drawable/user_chat_background"
-        android:linksClickable="true"
-        android:padding="10dp"
-        android:text="안녕하세요."
         android:textColor="@color/user_chat_font_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

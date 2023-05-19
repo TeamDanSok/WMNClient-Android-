@@ -1,5 +1,6 @@
 package com.example.wmn
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -18,8 +19,6 @@ class MainActivity : AppCompatActivity() {
         binding.sendButton.setOnClickListener {
             binding.message.text.clear()
             //채팅화면으로 전환시키면 됨
-<<<<<<< Updated upstream
-=======
             val intent = Intent(this@MainActivity, ChatActivity::class.java)
             intent.putExtra("message",binding.message.text.toString())
             startActivity(intent)
@@ -27,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         binding.moveScreen.setOnClickListener {
             val intent = Intent(this@MainActivity, ListActivity::class.java)
             startActivity(intent)
->>>>>>> Stashed changes
         }
     }
 }
