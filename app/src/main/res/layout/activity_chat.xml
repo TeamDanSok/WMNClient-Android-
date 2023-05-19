@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/mainback"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
+            app:srcCompat="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:text="WMN" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="350dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_messages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </ScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/moveScreen"
+            android:layout_marginTop="65dp"
+            android:background="@drawable/whiteback"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.widget.Button
+                android:id="@+id/mic"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/micbutton"
+                android:drawableTop="@drawable/biglogo"
+                android:padding="22dp" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/chatMessage"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:hint="Type message here..."
+                    android:inputType="text"
+                    android:textColorHint="@color/black" />
+
+                <Button
+                    android:id="@+id/chatSendButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#00000000"
+                    android:drawableBottom="@drawable/send" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
