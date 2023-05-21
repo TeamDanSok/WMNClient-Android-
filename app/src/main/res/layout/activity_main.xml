@@ -65,7 +65,7 @@
                 android:layout_height="130dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/micbutton"
-                android:drawableTop="@drawable/biglogo"
+                android:drawableTop="@drawable/micchange"
                 android:padding="38dp" />
 
 
