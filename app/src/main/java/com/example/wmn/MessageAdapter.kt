@@ -1,16 +1,19 @@
 package com.example.wmn
 
 import android.annotation.SuppressLint
+import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wmn.databinding.BotChatMessageBinding
 import com.example.wmn.databinding.UserChatMessageBinding
+import java.util.Locale
 
 class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items = ArrayList<MyMessage>()
     interface OnItemClickListener {
+        fun OnChatBotClick(message: String)
     }
 
     var itemClickListener:OnItemClickListener?= null
@@ -19,6 +22,13 @@ class MessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private  val chatText = botbinding.txtMessage
         fun bind(item: MyMessage){
             chatText.text = item.message
+        }
+
+        init {
+            botbinding.txtMessage.setOnClickListener {
+                itemClickListener?.OnChatBotClick(items[adapterPosition].message)
+
+            }
         }
     }
     inner class UserViewHolder(val userbinding: UserChatMessageBinding): RecyclerView.ViewHolder(userbinding.root){
