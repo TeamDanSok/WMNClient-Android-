@@ -4,15 +4,16 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <queries>
         <intent>
-            <action android:name="android.intent.action.TTS_SERVICE"/>
+            <action android:name="android.speech.RecognitionService" />
         </intent>
     </queries>
     <queries>
         <intent>
-            <action android:name="android.speech.RecognitionService" />
+            <action android:name="android.intent.action.TTS_SERVICE"/>
         </intent>
     </queries>
     <application
@@ -27,7 +28,9 @@
         tools:targetApi="31">
         <activity
             android:name=".ChatActivity"
-            android:exported="false" />
+            android:exported="false" >
+
+        </activity>
         <activity
             android:name=".ListActivity"
             android:exported="false"
@@ -40,6 +43,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity

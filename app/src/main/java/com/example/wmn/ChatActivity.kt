@@ -21,12 +21,11 @@ import java.util.Locale
 class ChatActivity : AppCompatActivity() {
     lateinit var binding : ActivityChatBinding
     lateinit var messageadapter: MessageAdapter
-    private var speechRecognizer : SpeechRecognizer? = null
-    private val REQUEST_CODE = 1
-
     var chatList = ArrayList<MyMessage>()
 
     private var tts: TextToSpeech? = null
+    private var speechRecognizer : SpeechRecognizer? = null
+    private val REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +57,11 @@ class ChatActivity : AppCompatActivity() {
             tts!!.shutdown()
             tts = null
         }
+        if (speechRecognizer != null) {
+            speechRecognizer!!.destroy()
+            speechRecognizer!!.cancel()
+            speechRecognizer = null
+        }
         super.onDestroy()
     }
 
@@ -75,7 +79,6 @@ class ChatActivity : AppCompatActivity() {
     }
 
     fun CheckPermission() {
-        //안드로이드 버전이 6.0 이상
         //인터넷이나 녹음 권한이 없으면 권한 요청
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -96,7 +99,9 @@ class ChatActivity : AppCompatActivity() {
     }
     private fun recognitionListener() = object : RecognitionListener {
 
-        override fun onReadyForSpeech(params: Bundle?) = Toast.makeText(this@ChatActivity, "음성인식 시작", Toast.LENGTH_SHORT).show()
+        override fun onReadyForSpeech(params: Bundle?) {
+            Toast.makeText(this@ChatActivity, "음성인식 시작", Toast.LENGTH_SHORT).show()
+        }
 
         override fun onRmsChanged(rmsdB: Float) {}
 
@@ -116,7 +121,7 @@ class ChatActivity : AppCompatActivity() {
                 SpeechRecognizer.ERROR_CLIENT -> "클라이언트 에러"
                 SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "퍼미션 없음"
                 SpeechRecognizer.ERROR_NETWORK -> "네트워크 에러"
-                SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "네트웍 타임아웃"
+                SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "네트워크 타임아웃"
                 SpeechRecognizer.ERROR_NO_MATCH -> "찾을 수 없음"
                 SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "RECOGNIZER가 바쁨"
                 SpeechRecognizer.ERROR_SERVER -> "서버가 이상함"
@@ -133,19 +138,18 @@ class ChatActivity : AppCompatActivity() {
             for (i in 0 until msg.size) {
                 message += msg[i]
             }
-
             chatList.add(MyMessage(message, 1))
             chatList.add(MyMessage("챗봇 응답", 0))
             messageadapter.setData(list = chatList)
         }
     }
-    fun stopSTT() {
-        if (speechRecognizer != null) {
-            speechRecognizer!!.destroy()
-            speechRecognizer!!.cancel()
-            speechRecognizer = null
-        }
-    }
+//    fun stopSTT() {
+//        if (speechRecognizer != null) {
+//            speechRecognizer!!.destroy()
+//            speechRecognizer!!.cancel()
+//            speechRecognizer = null
+//        }
+//    }
     private fun init(){
         val msg = intent.getStringExtra("message")
         messageadapter = MessageAdapter()
@@ -169,15 +173,13 @@ class ChatActivity : AppCompatActivity() {
         messageadapter.setData(list = chatList)
 
         binding.chatSendButton.setOnClickListener {
-            if(binding.chatMessage.text.toString() != null){
+            if(binding.chatMessage.text.toString().isNotEmpty()){
                 chatList.add(MyMessage(binding.chatMessage.text.toString(), 1))
                 chatList.add(MyMessage("챗봇 응답", 0))
                 binding.chatMessage.text.clear()
                 messageadapter.setData(list = chatList)
             }
         }
-
-        //권한 설정되어 있는지 여부 확인하는 request 보내야함
 
         binding.mic.setOnClickListener {
             startSTT()
