@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mainback">
-
+    android:orientation="vertical"
+    android:background="#1E1E1E"
+    tools:context=".MainActivity">
     <LinearLayout
-        android:id="@+id/title_tab_ll"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
-
+        android:orientation="horizontal">
         <ImageView
             android:id="@+id/logo"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="10dp"
             app:srcCompat="@drawable/logo" />
-
         <TextView
-            android:id="@+id/chat_title_tv"
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
@@ -31,71 +27,42 @@
             android:textColor="@color/white"
             android:text="WMN" />
     </LinearLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/divider_left"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/title_tab_ll"
-        app:layout_constraintEnd_toStartOf="@+id/title_tab_ll"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/title_tab_ll">
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/divider_right"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/title_tab_ll"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/title_tab_ll"
-        app:layout_constraintTop_toTopOf="@+id/title_tab_ll">
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_messages"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="320dp" />
 
     <FrameLayout
-        android:id="@+id/chat_field_fl"
         android:layout_width="match_parent"
-        android:layout_height="272dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
+        android:layout_height="match_parent">
         <FrameLayout
-            android:id="@+id/chat_moveScreen"
+            android:id="@+id/moveScreen"
             android:layout_marginTop="65dp"
             android:background="@drawable/whiteback"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <android.widget.Button
-                android:id="@+id/chat_mic"
+                android:id="@+id/mic"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/micbutton"
-                android:drawableTop="@drawable/biglogo"
-                android:padding="22dp"
-                android:contentDescription="마이크버튼"
-                />
-
-
+                android:drawableTop="@drawable/micchange"
+                android:padding="38dp" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
                 android:orientation="horizontal">
-
                 <EditText
-                    android:id="@+id/chat_message"
+                    android:id="@+id/chatMessage"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:hint="Type message here..."
@@ -103,44 +70,12 @@
                     android:textColorHint="@color/black" />
 
                 <Button
-                    android:id="@+id/chat_sendButton"
+                    android:id="@+id/chatSendButton"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginEnd="5dp"
                     android:background="#00000000"
-                    android:drawableBottom="@drawable/send"
-                    android:contentDescription="전송버튼"
-                    />
-
+                    android:drawableBottom="@drawable/send" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/divider_bottom"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="#B6B6B6"
-        app:layout_constraintBottom_toTopOf="@+id/chat_field_fl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_messages"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/chat_field_fl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_tab_ll"
-        />
-
-    <!--tools:listitem="@layout/list_talk_item_user"-->
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -65,13 +65,14 @@
                 android:layout_height="130dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/micbutton"
-                android:drawableTop="@drawable/biglogo"
-                android:padding="22dp" />
+                android:drawableTop="@drawable/micchange"
+                android:padding="38dp" />
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
                 android:orientation="horizontal">
@@ -88,7 +89,6 @@
                     android:id="@+id/sendButton"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginEnd="5dp"
                     android:background="#00000000"
                     android:drawableBottom="@drawable/send" />
 

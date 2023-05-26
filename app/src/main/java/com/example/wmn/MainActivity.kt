@@ -17,11 +17,11 @@ class MainActivity : AppCompatActivity() {
 
     fun init(){
         binding.sendButton.setOnClickListener {
-            var message = binding.message.text.toString()
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             binding.message.text.clear()
             //채팅화면으로 전환시키면 됨
-
+            val intent = Intent(this@MainActivity, ChatActivity::class.java)
+            intent.putExtra("message",binding.message.text.toString())
+            startActivity(intent)
         }
         binding.moveScreen.setOnClickListener {
             val intent = Intent(this@MainActivity, ListActivity::class.java)
