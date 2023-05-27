@@ -48,21 +48,21 @@ class HealthActivity : AppCompatActivity() {
         db = UsernameDatabase.getDatabase(this)
 
         binding.apply {
-            userhealthNextBtn.isEnabled = false
+            userHealthNextBtn.isEnabled = false
 
             //input이 있을때만 버튼 활성화
-            userhealthEt.addTextChangedListener(object: TextWatcher{
+            userHealthEt.addTextChangedListener(object: TextWatcher{
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    healthInfo = userhealthEt.text.toString()
-                    userhealthNextBtn.isEnabled = healthInfo.isNotEmpty()
+                    healthInfo = userHealthEt.text.toString()
+                    userHealthNextBtn.isEnabled = healthInfo.isNotEmpty()
                 }
 
                 override fun afterTextChanged(p0: Editable?) {}
             })
 
-            userhealthNextBtn.setOnClickListener {
+            userHealthNextBtn.setOnClickListener {
                 Toast.makeText(this@HealthActivity, healthInfo, Toast.LENGTH_SHORT).show()
                 System.out.println("health info is "+healthInfo)
                 //Main 화면으로 전환

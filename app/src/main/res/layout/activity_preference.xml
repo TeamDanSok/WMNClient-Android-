@@ -1,38 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@drawable/homeback">
+
+    <ImageView
+        android:id="@+id/prefer_logo_iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
     <TextView
-        android:id="@+id/food_prefer_tv"
+        android:id="@+id/prefer_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="10dp"
+        android:text="WMN"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/prefer_logo_iv"
+        app:layout_constraintStart_toEndOf="@id/prefer_logo_iv"
+        app:layout_constraintTop_toTopOf="@id/prefer_logo_iv" />
+
+
+    <TextView
+        android:id="@+id/health_intro_tv"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="111dp"
+        android:text="선호하는 메뉴를 2개 이상 입력해주세요"
+        android:textAlignment="center"
+        android:textColor="#F2F2F2"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="265dp"
+        android:layout_height="290dp"
+        app:layout_constraintTop_toBottomOf="@id/health_intro_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="I favor ..."
-        />
+        android:layout_marginTop="32dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/favor1"
+            android:layout_width="75dp"
+            android:layout_height="84dp"
+            android:background="@drawable/round_shape_menu"
+            android:drawableTop="@drawable/favor1_smaller"
+            android:padding="10dp"
+
+            android:text="한식"
+            android:textColor="@color/white"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/favor2"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/favor2"
+            android:layout_width="75dp"
+            android:layout_height="84dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/round_shape_menu"
+            android:drawableTop="@drawable/favor2_smaller"
+            android:padding="10dp"
+
+            android:text="일식"
+            android:textColor="@color/white"
+
+            app:layout_constraintStart_toEndOf="@id/favor1"
+            app:layout_constraintEnd_toStartOf="@id/favor3"
+            app:layout_constraintTop_toTopOf="@id/favor1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/favor3"
+            android:layout_width="75dp"
+            android:layout_height="84dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/round_shape_menu"
+            android:drawableTop="@drawable/favor2_smaller"
+            android:padding="10dp"
+
+            android:text="중식"
+            android:textColor="@color/white"
+
+            app:layout_constraintStart_toEndOf="@id/favor2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/favor1" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/favor4"
+            android:layout_width="75dp"
+            android:layout_height="84dp"
+            android:background="@drawable/round_shape_menu"
+            android:drawableTop="@drawable/favor1_smaller"
+            android:layout_marginTop="15dp"
+            android:padding="10dp"
+
+            android:text="한식"
+            android:textColor="@color/white"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/favor5"
+            app:layout_constraintTop_toBottomOf="@id/favor1"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/favor5"
+            android:layout_width="75dp"
+            android:layout_height="84dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/round_shape_menu"
+            android:drawableTop="@drawable/favor2_smaller"
+            android:padding="10dp"
+
+            android:text="일식"
+            android:textColor="@color/white"
+
+            app:layout_constraintStart_toEndOf="@id/favor4"
+            app:layout_constraintEnd_toStartOf="@id/favor6"
+            app:layout_constraintTop_toTopOf="@id/favor4" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/favor6"
+            android:layout_width="75dp"
+            android:layout_height="84dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/round_shape_menu"
+            android:drawableTop="@drawable/favor2_smaller"
+            android:padding="10dp"
+
+            android:text="중식"
+            android:textColor="@color/white"
+
+            app:layout_constraintStart_toEndOf="@id/favor5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/favor4" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/favor7"
+            android:layout_width="75dp"
+            android:layout_height="84dp"
+            android:background="@drawable/round_shape_menu"
+            android:drawableTop="@drawable/favor1_smaller"
+            android:padding="10dp"
+            android:layout_marginTop="15dp"
+
+            android:text="한식"
+            android:textColor="@color/white"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/favor8"
+            app:layout_constraintTop_toBottomOf="@id/favor4"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/favor8"
+            android:layout_width="75dp"
+            android:layout_height="84dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/round_shape_menu"
+            android:drawableTop="@drawable/favor2_smaller"
+            android:padding="10dp"
+
+            android:text="일식"
+            android:textColor="@color/white"
+
+            app:layout_constraintStart_toEndOf="@id/favor7"
+            app:layout_constraintEnd_toStartOf="@id/favor9"
+            app:layout_constraintTop_toTopOf="@id/favor7" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/favor9"
+            android:layout_width="75dp"
+            android:layout_height="84dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/round_shape_menu"
+            android:drawableTop="@drawable/favor2_smaller"
+            android:padding="10dp"
+
+            android:text="중식"
+            android:textColor="@color/white"
+
+            app:layout_constraintStart_toEndOf="@id/favor8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/favor7" />
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
         android:id="@+id/food_prefer_et"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/food_prefer_tv"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="289dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/round_shape_input"
+        android:paddingStart="30dp"
+        android:text="Enter your favorite dish"
+        android:textColor="#80FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/prefer_next_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/prefer_next_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/food_prefer_et"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="229dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/round_shape_nextbutton"
+        android:text="NEXT"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:text="next"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

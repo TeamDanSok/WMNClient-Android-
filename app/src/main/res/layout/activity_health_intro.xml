@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -31,43 +30,45 @@
 
 
     <TextView
-        android:id="@+id/health_tv"
+        android:id="@+id/health_intro_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="278dp"
-        android:text="알러지가 있는 음식을 입력해주세요"
+        android:layout_marginTop="370dp"
+        android:text="음식 알러지가 있으신가요?"
         android:textColor="#F2F2F2"
         android:textSize="25sp"
         />
 
-    <EditText
-        android:id="@+id/user_health_et"
-        android:layout_width="289dp"
-        android:layout_height="64dp"
-        app:layout_constraintTop_toBottomOf="@id/health_tv"
+    <Button
+        android:id="@+id/health_yes_btn"
+        android:layout_width="155dp"
+        android:layout_height="67dp"
+        app:layout_constraintTop_toBottomOf="@id/health_intro_tv"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toStartOf="@id/health_no_btn"
+        android:layout_marginTop="66dp"
+        android:text="네"
+        android:textSize="20sp"
         android:background="@drawable/round_shape_input"
-        android:text="ex) 새우, 갑각류, 생선, 계란"
-        android:paddingStart="30dp"
-        android:textColor="#80FFFFFF"
+        app:backgroundTint="@color/black"
+
         />
 
     <Button
-        android:id="@+id/user_health_next_btn"
-        android:layout_width="229dp"
-        android:layout_height="60dp"
-        app:layout_constraintTop_toBottomOf="@id/user_health_et"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/health_no_btn"
+        android:layout_width="155dp"
+        android:layout_height="67dp"
+        app:layout_constraintTop_toBottomOf="@id/health_intro_tv"
+        app:layout_constraintStart_toEndOf="@id/health_yes_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="67dp"
-        android:backgroundTint="@drawable/round_shape_nextbutton"
-        android:text="NEXT"
-        android:textColor="@color/white"
+        android:layout_marginTop="66dp"
+        android:text="아니요"
+        android:textSize="20sp"
+        android:background="@drawable/round_shape_input"
+        app:backgroundTint="@null"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

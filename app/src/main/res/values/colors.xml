@@ -6,4 +6,5 @@
     <color name="chat_bgr">#1E1E1E</color>
     <color name="user_chat_font_color">#000000</color>
     <color name="bot_chat_font_color">#F2F2F2</color>
+
 </resources>

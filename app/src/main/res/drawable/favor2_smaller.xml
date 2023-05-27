@@ -1,0 +1,7 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/favor2"
+        android:width="42dp"
+        android:height="42dp">
+    </item>
+</layer-list>
