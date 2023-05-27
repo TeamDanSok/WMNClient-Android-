@@ -1,4 +1,4 @@
-package com.example.wmn
+package com.example.wmn.activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import com.example.wmn.recyclerView.MessageAdapter
+import com.example.wmn.chat.MyMessage
 import com.example.wmn.databinding.ActivityChatBinding
 import java.util.Locale
 
@@ -158,12 +161,13 @@ class ChatActivity : AppCompatActivity() {
             this, LinearLayoutManager.VERTICAL, false
         )
 
-        messageadapter.itemClickListener = object:MessageAdapter.OnItemClickListener {
+        messageadapter.itemClickListener = object: MessageAdapter.OnItemClickListener {
             override fun OnChatBotClick(message: String) {
                     Log.d("TTS", "I;m here")
                     tts!!.speak(message, TextToSpeech.QUEUE_ADD, null, "i1")
             }
         }
+
 
         binding.recyclerMessages.adapter = messageadapter
 
@@ -178,6 +182,7 @@ class ChatActivity : AppCompatActivity() {
                 chatList.add(MyMessage("챗봇 응답", 0))
                 binding.chatMessage.text.clear()
                 messageadapter.setData(list = chatList)
+                binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
             }
         }
 

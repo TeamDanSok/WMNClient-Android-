@@ -1,4 +1,4 @@
-package com.example.wmn
+package com.example.wmn.firstrun
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.wmn.R
+import com.example.wmn.activity.MainActivity
 import com.example.wmn.databinding.ActivityHealthBinding
-import com.example.wmn.databinding.ActivityPreferenceBinding
-import com.example.wmn.databinding.ActivityUsernameBinding
 
 class HealthActivity : AppCompatActivity() {
     lateinit var binding : ActivityHealthBinding
