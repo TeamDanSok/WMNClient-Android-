@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:background="#1E1E1E"
     tools:context=".activity.MainActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -27,15 +28,20 @@
             android:textColor="@color/white"
             android:text="WMN" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_messages"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="320dp" />
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true">
         <FrameLayout
             android:id="@+id/moveScreen"
             android:layout_marginTop="65dp"
@@ -68,7 +74,6 @@
                     android:hint="Type message here..."
                     android:inputType="text"
                     android:textColorHint="@color/black" />
-
                 <Button
                     android:id="@+id/chatSendButton"
                     android:layout_width="50dp"
@@ -78,4 +83,5 @@
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
+    </RelativeLayout>
 </LinearLayout>
