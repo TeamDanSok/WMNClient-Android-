@@ -1,4 +1,4 @@
-package com.example.myroomdb
+package com.example.wmn.roomDB
 
 import android.content.Context
 import androidx.room.Database
@@ -11,7 +11,7 @@ import com.example.wmn.roomDB.Username
     version =1
 )
 abstract class UsernameDatabase:RoomDatabase(){
-    abstract fun productDao():UsernameDAO
+    abstract fun productDao(): UsernameDAO
 
     companion object {
         private  var INSTANCE: UsernameDatabase? = null

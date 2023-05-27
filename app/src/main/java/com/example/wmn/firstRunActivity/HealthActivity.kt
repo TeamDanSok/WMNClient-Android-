@@ -1,4 +1,4 @@
-package com.example.wmn.firstrun
+package com.example.wmn.firstRunActivity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wmn.R
-import com.example.wmn.activity.MainActivity
+import com.example.wmn.activity.StartActivity
 import com.example.wmn.databinding.ActivityHealthBinding
 
 class HealthActivity : AppCompatActivity() {
@@ -42,7 +42,7 @@ class HealthActivity : AppCompatActivity() {
             Toast.makeText(this, healthInfo, Toast.LENGTH_SHORT).show()
             System.out.println("health info is "+healthInfo)
             //Main 화면으로 전환
-            val intent = Intent(this@HealthActivity, MainActivity::class.java)
+            val intent = Intent(this@HealthActivity, StartActivity::class.java)
             startActivity(intent)
         }
     }

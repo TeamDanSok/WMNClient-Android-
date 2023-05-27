@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.wmn.databinding.ActivityStartBinding
-import com.example.wmn.firstrun.UsernameActivity
+import com.example.wmn.firstRunActivity.UsernameActivity
 
 class StartActivity : AppCompatActivity() {
     lateinit var binding: ActivityStartBinding
