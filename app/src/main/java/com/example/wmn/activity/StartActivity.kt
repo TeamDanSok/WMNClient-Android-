@@ -1,10 +1,10 @@
-package com.example.wmn
+package com.example.wmn.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.wmn.databinding.ActivityMainBinding
 import com.example.wmn.databinding.ActivityStartBinding
+import com.example.wmn.firstrun.UsernameActivity
 
 class StartActivity : AppCompatActivity() {
     lateinit var binding: ActivityStartBinding

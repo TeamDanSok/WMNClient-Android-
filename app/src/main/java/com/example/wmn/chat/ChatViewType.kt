@@ -1,4 +1,4 @@
-package com.example.wmn
+package com.example.wmn.chat
 
 object ChatViewType {
     const val LEFT = 0

@@ -1,10 +1,11 @@
-package com.example.wmn
+package com.example.wmn.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.wmn.recyclerView.ListAdapter
+import com.example.wmn.R
 import com.example.wmn.databinding.ActivityListBinding
-import com.example.wmn.databinding.ActivityMainBinding
 
 class ListActivity : AppCompatActivity() {
     lateinit var binding: ActivityListBinding

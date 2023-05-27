@@ -1,4 +1,4 @@
-package com.example.wmn
+package com.example.wmn.recyclerView
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ class ListAdapter(val items: Array<String>)  : RecyclerView.Adapter<ListAdapter.
     interface OnItemClickListener {
     }
 
-    var itemClickListener:OnItemClickListener?= null
+    var itemClickListener: OnItemClickListener?= null
 
     inner class ViewHolder (val binding: RowBinding):RecyclerView.ViewHolder(binding.root){
         init {
