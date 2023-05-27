@@ -50,13 +50,13 @@
             android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".firstrun.UsernameActivity"
+            android:name=".firstRunActivity.UsernameActivity"
             android:exported="false" />
         <activity
-            android:name=".firstrun.PreferenceActivity"
+            android:name=".firstRunActivity.PreferenceActivity"
             android:exported="false" />
         <activity
-            android:name=".firstrun.HealthActivity"
+            android:name=".firstRunActivity.HealthActivity"
             android:exported="false" />
 
     </application>

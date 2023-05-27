@@ -1,4 +1,4 @@
-package com.example.wmn.firstrun
+package com.example.wmn.firstRunActivity
 
 import android.content.Intent
 import android.os.Bundle
