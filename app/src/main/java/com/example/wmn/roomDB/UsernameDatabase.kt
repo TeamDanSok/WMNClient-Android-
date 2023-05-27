@@ -11,7 +11,7 @@ import com.example.wmn.roomDB.Username
     version =1
 )
 abstract class UsernameDatabase:RoomDatabase(){
-    abstract fun productDao(): UsernameDAO
+    abstract fun usernameDao(): UsernameDAO
 
     companion object {
         private  var INSTANCE: UsernameDatabase? = null
@@ -26,7 +26,7 @@ abstract class UsernameDatabase:RoomDatabase(){
             val instance = Room.databaseBuilder(
                 context,
                 UsernameDatabase::class.java,
-                "productdb"
+                "usernamedb"
             ).build()
 
             INSTANCE = instance

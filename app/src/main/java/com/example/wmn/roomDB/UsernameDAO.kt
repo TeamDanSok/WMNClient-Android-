@@ -11,17 +11,15 @@ import com.example.wmn.roomDB.Username
 @Dao
 interface UsernameDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertProduct(user:Username)
+    fun insertUser(user: Username)
 
     @Delete
-    fun deleteProduct(user:Username)
+    fun deleteUser(user :Username)
 
     @Update
-    fun updateProduct(user:Username)
+    fun updateUser(user :Username)
 
     @Query("Select * from users")
-    fun getAllRecord(): List<Username>
+    fun getUser(): List<Username>
 
-    @Query("Select * from users where uID = :uId")
-    fun findProduct(uId: Int): List<Username>
 }

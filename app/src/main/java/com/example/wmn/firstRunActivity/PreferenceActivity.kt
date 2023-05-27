@@ -1,6 +1,7 @@
 package com.example.wmn.firstRunActivity
 
 import android.content.Intent
+import android.os.Build.VERSION_CODES.S
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,42 +14,46 @@ import com.example.wmn.databinding.ActivityPreferenceBinding
 
 class PreferenceActivity : AppCompatActivity() {
     lateinit var binding : ActivityPreferenceBinding
+    lateinit var preferredFood : String
+    lateinit var username : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPreferenceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val foodPreferEdit : EditText = findViewById(R.id.food_prefer_et)
-        val preferNextBtn : Button = findViewById(R.id.prefer_next_btn)
+        val intent = getIntent()
+        username = intent.getStringExtra("username").toString()
 
-        var preferedFood: String = ""
 
-        preferNextBtn.isEnabled = false
-
-        //input이 있을때만 버튼 활성화
-        foodPreferEdit.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                preferedFood = foodPreferEdit.text.toString()
-                preferNextBtn.isEnabled = preferedFood.isNotEmpty()
-            }
-
-            override fun afterTextChanged(p0: Editable?) {}
-        })
-
-        preferNextBtn.setOnClickListener {
-            Toast.makeText(this, preferedFood, Toast.LENGTH_SHORT).show()
-            //건강조사(ex.알러지)로 전환
-            val intent = Intent(this@PreferenceActivity, HealthActivity::class.java)
-            startActivity(intent)
-
-        }
+        init()
     }
 
-    fun init() {
-        binding.preferNextBtn.setOnClickListener{
-            System.out.println(binding.foodPreferEt.text.toString())
+    private fun init() {
+        binding.apply {
+            preferNextBtn.isEnabled = false
+
+            //input이 있을때만 버튼 활성화
+            foodPreferEt.addTextChangedListener(object: TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    preferredFood = foodPreferEt.text.toString()
+                    preferNextBtn.isEnabled = preferredFood.isNotEmpty()
+                }
+
+                override fun afterTextChanged(p0: Editable?) {}
+            })
+
+            preferNextBtn.setOnClickListener {
+                if (preferredFood != null) {
+                    Toast.makeText(this@PreferenceActivity, preferredFood, Toast.LENGTH_SHORT).show()
+                    //건강조사(ex.알러지)로 전환
+                    val intent = Intent(this@PreferenceActivity, HealthActivity::class.java)
+                    intent.putExtra("username", username)
+                    intent.putExtra("preferredFood", preferredFood)
+                    startActivity(intent)
+                }
+            }
         }
     }
 }
