@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import com.example.wmn.recyclerView.MessageAdapter
 import com.example.wmn.chat.MyMessage
 import com.example.wmn.databinding.ActivityChatBinding
@@ -167,6 +168,7 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
+
         binding.recyclerMessages.adapter = messageadapter
 
 
@@ -180,6 +182,7 @@ class ChatActivity : AppCompatActivity() {
                 chatList.add(MyMessage("챗봇 응답", 0))
                 binding.chatMessage.text.clear()
                 messageadapter.setData(list = chatList)
+                binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
             }
         }
 
