@@ -36,7 +36,7 @@
         android:id="@+id/recycler_messages"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="400dp" />
 
     <FrameLayout
         android:layout_width="match_parent"
