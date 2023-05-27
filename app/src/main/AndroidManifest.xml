@@ -49,6 +49,16 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".UsernameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PreferenceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HealthActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
