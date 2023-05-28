@@ -57,7 +57,7 @@
         android:textColor="#80FFFFFF"
         />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/user_health_next_btn"
         android:layout_width="229dp"
         android:layout_height="60dp"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="67dp"
-        android:backgroundTint="@drawable/round_shape_nextbutton"
+        android:background="@drawable/round_shape_nextbutton"
         android:text="NEXT"
         android:textColor="@color/white"
         />

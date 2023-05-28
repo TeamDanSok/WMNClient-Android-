@@ -218,7 +218,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/prefer_next_btn"
         android:layout_width="229dp"
         android:layout_height="60dp"
@@ -226,7 +226,6 @@
         android:background="@drawable/round_shape_nextbutton"
         android:text="NEXT"
         android:textColor="@color/white"
-        app:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
