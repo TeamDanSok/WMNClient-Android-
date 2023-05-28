@@ -55,6 +55,8 @@
         android:hint="Enter your name"
         android:paddingStart="30dp"
         android:textColorHint="#80FFFFFF"
+        android:textColor="@color/white"
+        android:inputType="text"
         />
 
     <androidx.appcompat.widget.AppCompatButton

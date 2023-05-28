@@ -212,11 +212,14 @@
         android:layout_marginBottom="25dp"
         android:background="@drawable/round_shape_input"
         android:paddingStart="30dp"
-        android:text="Enter your favorite dish"
+        android:hint="Enter your favorite dish"
+        android:textColorHint="#80FFFFFF"
         android:textColor="#80FFFFFF"
         app:layout_constraintBottom_toTopOf="@id/prefer_next_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:inputType="text"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/prefer_next_btn"

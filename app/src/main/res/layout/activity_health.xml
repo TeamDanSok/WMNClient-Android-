@@ -52,9 +52,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="60dp"
         android:background="@drawable/round_shape_input"
-        android:text="ex) 새우, 갑각류, 생선, 계란"
+        android:hint="ex) 새우, 갑각류, 생선, 계란"
+        android:textColorHint="#80FFFFFF"
         android:paddingStart="30dp"
         android:textColor="#80FFFFFF"
+        android:inputType="text"
         />
 
     <androidx.appcompat.widget.AppCompatButton

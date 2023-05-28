@@ -55,11 +55,24 @@
             android:name=".firstRunActivity.UsernameActivity"
             android:exported="false" />
         <activity
+            android:name=".firstRunActivity.PreferenceIntroActivity"
+            android:exported="false" />
+        <activity
             android:name=".firstRunActivity.PreferenceActivity"
             android:exported="false" />
         <activity
             android:name=".firstRunActivity.HealthActivity"
             android:exported="false" />
+        <activity
+            android:name=".firstRunActivity.HealthIntroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".firstRunActivity.AddfridgeActivity"
+            android:exported="false" />
+
+
+
+
 
     </application>
 

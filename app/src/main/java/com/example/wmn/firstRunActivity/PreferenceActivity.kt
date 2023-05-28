@@ -46,15 +46,90 @@ class PreferenceActivity : AppCompatActivity() {
                 override fun afterTextChanged(p0: Editable?) {}
             })
 
-            //선호 음식 리스너 추가
+          /*
+          //선호 음식 리스너 추가
+            favor1.setOnClickListener{
+                if (::preferredFood.isInitialized) {
+                    preferredFood += favor1.getText().toString()
+                }
+                else {
+                    preferredFood += favor1.getText().toString()
+                }
 
+            }
+            favor2.setOnClickListener{
+                if (::preferredFood.isInitialized) {
+                    preferredFood += favor2.getText().toString()
+                }
+                else {
+                    preferredFood += favor2.getText().toString()
+                }
+            }
+            favor3.setOnClickListener{
+                if (::preferredFood.isInitialized) {
+                    preferredFood += favor3.getText().toString()
+                }
+                else {
+                    preferredFood += favor3.getText().toString()
+                }
+            }
+            favor4.setOnClickListener{
+                if (::preferredFood.isInitialized) {
+                    preferredFood += favor4.getText().toString()
+                }
+                else {
+                    preferredFood += favor4.getText().toString()
+                }
+            }
+            favor5.setOnClickListener{
+                if (::preferredFood.isInitialized) {
+                    preferredFood += favor5.getText().toString()
+                }
+                else {
+                    preferredFood += favor5.getText().toString()
+                }
+            }
+            favor6.setOnClickListener{
+                if (::preferredFood.isInitialized) {
+                    preferredFood += favor6.getText().toString()
+                }
+                else {
+                    preferredFood += favor6.getText().toString()
+                }
+            }
+            favor7.setOnClickListener{
+                if (::preferredFood.isInitialized) {
+                    preferredFood += favor7.getText().toString()
+                }
+                else {
+                    preferredFood += favor7.getText().toString()
+                }
+            }
+            favor8.setOnClickListener{
+                if (::preferredFood.isInitialized) {
+                    preferredFood += favor8.getText().toString()
+                }
+                else {
+                    preferredFood += favor8.getText().toString()
+                }
+            }
+            favor9.setOnClickListener{
+                if (::preferredFood.isInitialized) {
+                    preferredFood += favor9.getText().toString()
+                }
+                else {
+                    preferredFood += favor9.getText().toString()
+                }
+            }
+
+*/
 
             //다음 버튼
             preferNextBtn.setOnClickListener {
                 if (preferredFood != null) {
                     Toast.makeText(this@PreferenceActivity, preferredFood, Toast.LENGTH_SHORT).show()
                     //건강조사(ex.알러지)로 전환
-                    val intent = Intent(this@PreferenceActivity, HealthActivity::class.java)
+                    val intent = Intent(this@PreferenceActivity, HealthIntroActivity::class.java)
                     intent.putExtra("username", username)
                     intent.putExtra("preferredFood", preferredFood)
                     startActivity(intent)
