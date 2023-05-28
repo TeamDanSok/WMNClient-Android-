@@ -24,21 +24,18 @@ class PreferenceActivity : AppCompatActivity() {
         val intent = getIntent()
         username = intent.getStringExtra("username").toString()
 
-
         init()
     }
 
     private fun init() {
         binding.apply {
-            preferNextBtn.isEnabled = false
+            //버튼 리스너 추가해야함
 
-            //input이 있을때만 버튼 활성화
-            foodPreferEt.addTextChangedListener(object: TextWatcher{
+            preferEt.addTextChangedListener(object: TextWatcher{
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    preferredFood = foodPreferEt.text.toString()
-                    preferNextBtn.isEnabled = preferredFood.isNotEmpty()
+                    preferredFood = preferEt.text.toString()
                 }
 
                 override fun afterTextChanged(p0: Editable?) {}

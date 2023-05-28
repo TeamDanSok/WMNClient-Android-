@@ -6,7 +6,7 @@
     android:background="@drawable/homeback">
 
     <ImageView
-        android:id="@+id/pref_logo_iv"
+        android:id="@+id/prefer_intro_logo_iv"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="13dp"
@@ -16,15 +16,15 @@
         app:srcCompat="@drawable/logo" />
 
     <TextView
-        android:id="@+id/pref_title_tv"
+        android:id="@+id/prefer_intro_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="WMN"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@id/pref_logo_iv"
-        app:layout_constraintTop_toTopOf="@id/pref_logo_iv"
-        app:layout_constraintBottom_toBottomOf="@id/pref_logo_iv"
+        app:layout_constraintStart_toEndOf="@id/prefer_intro_logo_iv"
+        app:layout_constraintTop_toTopOf="@id/prefer_intro_logo_iv"
+        app:layout_constraintBottom_toBottomOf="@id/prefer_intro_logo_iv"
         android:layout_marginStart="10dp"
         />
 
