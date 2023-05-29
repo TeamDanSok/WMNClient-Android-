@@ -60,6 +60,9 @@
         <activity
             android:name=".firstRunActivity.HealthActivity"
             android:exported="false" />
+        <activity
+            android:name=".firstRunActivity.AddfridgeActivity"
+            android:exported="false" />
 
     </application>
 

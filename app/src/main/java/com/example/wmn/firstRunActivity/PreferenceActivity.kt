@@ -36,7 +36,7 @@ class PreferenceActivity : AppCompatActivity() {
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     if (::preferredFood.isInitialized) {
-                        preferredFood += preferEt.text.toString()
+                        preferredFood = preferEt.text.toString()
                     }
                     else {
                         preferredFood = preferEt.text.toString()
