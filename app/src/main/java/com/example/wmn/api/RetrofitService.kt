@@ -20,4 +20,10 @@ interface RetrofitService {
 
     @GET("dialog/open/{userNo}")
     fun getOpening(@Path("userNo") number : Int) :Call<ResponseBody>
+
+    @GET("dialog/isCreate/{userNo}")
+    fun getOK(@Path("userNo") number : Int) :Call<ResponseBody>
+
+    @GET("dialog/popDialog/{userNo}")
+    fun getDialog(@Path("userNo") number : Int) :Call<ResponseBody>
 }

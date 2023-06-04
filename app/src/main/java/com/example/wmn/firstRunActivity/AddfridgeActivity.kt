@@ -23,9 +23,6 @@ class AddfridgeActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddfridgeBinding
 
     lateinit var db: UsernameDatabase
-
-    var list = ArrayList<Username>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddfridgeBinding.inflate(layoutInflater)
@@ -51,7 +48,7 @@ class AddfridgeActivity : AppCompatActivity() {
                 override fun onResponse(
                     call: Call<ResponseBody>, response: Response<ResponseBody>
                 ) {
-                    Log.d("test", "냉장고등록연결성공")
+                    Log.d("test", "냉장고 등록 연결성공")
                     Log.d("test", response.code().toString())
                     val intent = Intent(this@AddfridgeActivity, StartActivity::class.java)
                     startActivity(intent)
