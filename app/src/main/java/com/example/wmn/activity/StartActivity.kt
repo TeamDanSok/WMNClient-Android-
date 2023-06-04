@@ -10,6 +10,7 @@ import com.example.wmn.databinding.ActivityStartBinding
 import com.example.wmn.firstRunActivity.UsernameActivity
 import com.example.wmn.roomDB.Username
 import com.example.wmn.roomDB.UsernameDatabase
+import com.example.wmn.service.ThreadService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +26,8 @@ class StartActivity : AppCompatActivity() {
     lateinit var binding: ActivityStartBinding
 
     lateinit var db: UsernameDatabase
+
+    //var thread:Thread ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val pref = getSharedPreferences("firstcheck", MODE_PRIVATE)
@@ -45,19 +48,8 @@ class StartActivity : AppCompatActivity() {
         else{
             //두번째 실행
             init()
-            val thread = Thread(Runnable {
-                val timer = Timer()
-
-                timer.scheduleAtFixedRate(object : TimerTask() {
-                    override fun run() {
-                        // 실행할 함수 호출
-                        if (getOK()){
-                            Log.d("test", "ok 받았다")
-                        }
-                    }
-                }, 0, 2000)
-            })
-            thread.start()
+            val intent = Intent(this@StartActivity, ThreadService::class.java)
+            startService(intent)
         }
 
 
@@ -67,12 +59,12 @@ class StartActivity : AppCompatActivity() {
         db = UsernameDatabase.getDatabase(this)
         binding.Button.setOnClickListener {
             getOpening()
-            val intent = Intent(this@StartActivity, MainActivity::class.java)
+            val intent = Intent(this@StartActivity, ChatActivity::class.java)
             startActivity(intent)
         }
         binding.textView2.setOnClickListener {
             getOpening()
-            val intent = Intent(this@StartActivity, MainActivity::class.java)
+            val intent = Intent(this@StartActivity, ChatActivity::class.java)
             startActivity(intent)
         }
     }
@@ -98,37 +90,37 @@ class StartActivity : AppCompatActivity() {
         }
     }
 
-    fun getOK() : Boolean {
-        var ok = false
-        CoroutineScope(Dispatchers.Main).launch {
-            val list = withContext(Dispatchers.IO) {
-                db.usernameDao().getUser() as ArrayList<Username>
-            }
-            Log.d("test", list[0].uId.toString())
-            RetrofitBuilder.api.getOK(list[0].uId)
-                .enqueue(object : Callback<ResponseBody> {
-                    override fun onResponse(
-                        call: Call<ResponseBody>, response: Response<ResponseBody>
-                    ) {
-                        val code = response.code()
-                        Log.d("test", "냉장고 응답요청 연결성공")
-                        Log.d("test", code.toString())
-                        if (code == 200) {
-                            ok = true
-                            Log.d("test", response.body().toString())
-                        }
-                        if (code == 202) {
-                            ok = true
-                            Log.d("test", response.body().toString())
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        Log.d("test", "연결실패")
-                    }
-
-                })
-        }
-        return ok
-    }
+//    fun getOK() : Boolean {
+//        var ok = false
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val list = withContext(Dispatchers.IO) {
+//                db.usernameDao().getUser() as ArrayList<Username>
+//            }
+//            Log.d("test", list[0].uId.toString())
+//            RetrofitBuilder.api.getOK(list[0].uId)
+//                .enqueue(object : Callback<ResponseBody> {
+//                    override fun onResponse(
+//                        call: Call<ResponseBody>, response: Response<ResponseBody>
+//                    ) {
+//                        val code = response.code()
+//                        Log.d("test", "냉장고 응답요청 연결성공")
+//                        Log.d("test", code.toString())
+//                        if (code == 200) {
+//                            ok = true
+//                            Log.d("test", response.body().toString())
+//                        }
+//                        if (code == 202) {
+//                            ok = true
+//                            Log.d("test", response.body().toString())
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                        Log.d("test", "연결실패")
+//                    }
+//
+//                })
+//        }
+//        return ok
+//    }
 }
