@@ -54,6 +54,7 @@
         android:singleLine="true"
         android:paddingStart="30dp"
         android:textColor="#80FFFFFF"
+        android:inputType="text"
         />
 
     <androidx.appcompat.widget.AppCompatButton
