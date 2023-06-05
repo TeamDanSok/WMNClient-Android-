@@ -42,7 +42,7 @@ class UsernameActivity : AppCompatActivity() {
                 if (username != null) {
                     Toast.makeText(this@UsernameActivity, username, Toast.LENGTH_SHORT).show()
                     //좋아하는 음식조사로 전환
-                    val intent = Intent(this@UsernameActivity, PreferenceIntroActivity::class.java)
+                    val intent = Intent(this@UsernameActivity, PreferenceActivity::class.java)
                     intent.putExtra("username", username)
                     startActivity(intent)
                 }

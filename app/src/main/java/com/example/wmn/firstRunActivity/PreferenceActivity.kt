@@ -129,7 +129,7 @@ class PreferenceActivity : AppCompatActivity() {
                 if (preferredFood != null) {
                     Toast.makeText(this@PreferenceActivity, preferredFood, Toast.LENGTH_SHORT).show()
                     //건강조사(ex.알러지)로 전환
-                    val intent = Intent(this@PreferenceActivity, HealthIntroActivity::class.java)
+                    val intent = Intent(this@PreferenceActivity, HealthActivity::class.java)
                     intent.putExtra("username", username)
                     intent.putExtra("preferredFood", preferredFood)
                     startActivity(intent)
