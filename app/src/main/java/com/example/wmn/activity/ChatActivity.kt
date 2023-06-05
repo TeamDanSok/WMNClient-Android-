@@ -16,15 +16,32 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
+import com.example.wmn.api.RetrofitBuilder
 import com.example.wmn.recyclerView.MessageAdapter
 import com.example.wmn.chat.MyMessage
 import com.example.wmn.databinding.ActivityChatBinding
+import com.example.wmn.roomDB.Username
+import com.example.wmn.roomDB.UsernameDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import org.json.JSONArray
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.Locale
+import java.util.Timer
+import java.util.TimerTask
 
 
 class ChatActivity : AppCompatActivity() {
     lateinit var binding : ActivityChatBinding
     lateinit var messageadapter: MessageAdapter
+    lateinit var db: UsernameDatabase
+
     var chatList = ArrayList<MyMessage>()
 
     private var tts: TextToSpeech? = null
@@ -173,8 +190,8 @@ class ChatActivity : AppCompatActivity() {
         binding.recyclerMessages.adapter = messageadapter
 
 
-        chatList.add(MyMessage(msg.toString(), 1))
-        chatList.add(MyMessage("챗봇 응답", 0))
+//        chatList.add(MyMessage(msg.toString(), 1))
+//        chatList.add(MyMessage("챗봇 응답", 0))
         messageadapter.setData(list = chatList)
 
         binding.chatSendButton.setOnClickListener {
@@ -187,9 +204,101 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
+        val thread = Thread(Runnable {
+            val timer = Timer()
+
+            timer.scheduleAtFixedRate(object : TimerTask() {
+                override fun run() {
+                    // 실행할 함수 호출
+                    if (getOK()){
+                        Log.d("test", "add : messages")
+                    }
+                }
+            }, 0, 2000)
+        })
+        thread.start();
+
         binding.mic.setOnClickListener {
             startSTT()
         }
+    }
+
+    fun getOK() : Boolean {
+        var ok = false
+        CoroutineScope(Dispatchers.Main).launch {
+            val list = withContext(Dispatchers.IO) {
+                db.usernameDao().getUser() as ArrayList<Username>
+            }
+            Log.d("test", list[0].uId.toString())
+            RetrofitBuilder.api.getOK(list[0].uId)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>, response: Response<ResponseBody>
+                    ) {
+                        val code = response.code()
+                        Log.d("test", "냉장고 응답요청 연결성공")
+                        Log.d("test", code.toString())
+                        if (code == 200) {
+                            ok = true
+                            Log.d("test", response.body().toString())
+                            getDialog()
+                            messageadapter.setData(list = chatList)
+                            messageadapter.notifyDataSetChanged()
+                            binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
+
+                        }
+                        if (code == 202) {
+                            Log.d("test", response.body().toString())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Log.d("test", t.toString())
+
+                    }
+
+                })
+        }
+        return ok
+    }
+
+    fun getDialog() : Boolean {
+        var responses = false;
+        CoroutineScope(Dispatchers.Main).launch {
+            val list = withContext(Dispatchers.IO) {
+                db.usernameDao().getUser() as ArrayList<Username>
+            }
+            Log.d("test", list[0].uId.toString())
+            RetrofitBuilder.api.getDialog(list[0].uId)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>, response: Response<ResponseBody>
+                    ) {
+                        val code = response.code()
+                        Log.d("test", "냉장고 응답요청 연결성공")
+                        Log.d("test", code.toString())
+                        if (code == 200) {
+
+                            var respBody = JSONArray(response.body()?.string() )
+                            Log.d("test", respBody.toString())
+                            for (i in 0..respBody.length()-1){
+                                var temp = respBody[i]
+                                Log.d("test2", temp.toString())
+                                chatList.add(MyMessage(JSONObject(temp.toString()).getString("wimnchat"), 0))
+                                tts!!.speak(JSONObject(temp.toString()).getString("wimnchat"), TextToSpeech.QUEUE_ADD, null, "i1")
+                            }
+
+                            Log.d("test", response.body().toString())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Log.d("test", "연결실패")
+                    }
+
+                })
+        }
+        return responses
     }
 
 }

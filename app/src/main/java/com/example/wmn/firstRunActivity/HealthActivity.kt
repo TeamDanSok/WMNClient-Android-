@@ -67,8 +67,6 @@ class HealthActivity : AppCompatActivity() {
                 System.out.println("health info is "+healthInfo)
                 //Main 화면으로 전환
                 http()
-                val intent = Intent(this@HealthActivity, StartActivity::class.java)
-                startActivity(intent)
             }
         }
     }
@@ -84,6 +82,8 @@ class HealthActivity : AppCompatActivity() {
                 var a = response.body()!!
                 Log.d("test", a.id.toString())
                 insertDB(a.id)
+                val intent = Intent(this@HealthActivity, AddfridgeActivity::class.java)
+                startActivity(intent)
             }
 
             override fun onFailure(call: Call<UserInfo>, t: Throwable) {
