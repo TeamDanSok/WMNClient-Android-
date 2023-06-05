@@ -2,6 +2,7 @@ package com.example.wmn.service
 
 import android.app.Service
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import com.example.wmn.api.RetrofitBuilder
@@ -20,16 +21,19 @@ class ThreadService : Service() {
 
     var thread:Thread?=null
     var num = 0
+    var ok = false
+
+    val binder = MyBinder()
 
     lateinit var db: UsernameDatabase
 
     override fun onCreate() {
         super.onCreate()
+        db = UsernameDatabase.getDatabase(this)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return super.onStartCommand(intent, flags, startId)
-        db = UsernameDatabase.getDatabase(this)
         if (thread == null) {
             thread = object:Thread("OKThread") {
                 override fun run() {
@@ -60,12 +64,14 @@ class ThreadService : Service() {
         thread = null
     }
 
+    inner  class MyBinder: Binder() {
+        fun  getService():ThreadService = this@ThreadService
+    }
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
     fun getOK() : Boolean {
-        var ok = false
         CoroutineScope(Dispatchers.Main).launch {
             val list = withContext(Dispatchers.IO) {
                 db.usernameDao().getUser() as ArrayList<Username>
@@ -80,10 +86,6 @@ class ThreadService : Service() {
                         Log.d("test", "냉장고 응답요청 연결성공")
                         Log.d("test", code.toString())
                         if (code == 200) {
-                            ok = true
-                            Log.d("test", response.body().toString())
-                        }
-                        if (code == 202) {
                             ok = true
                             Log.d("test", response.body().toString())
                         }

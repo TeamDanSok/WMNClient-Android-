@@ -44,6 +44,10 @@ class ChatActivity : AppCompatActivity() {
 
     var chatList = ArrayList<MyMessage>()
 
+    var thread : Thread? = null
+    var ok = false
+    var body = ""
+
     private var tts: TextToSpeech? = null
     private var speechRecognizer : SpeechRecognizer? = null
     private val REQUEST_CODE = 1
@@ -52,6 +56,29 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        db = UsernameDatabase.getDatabase(this)
+
+        if (thread == null) {
+            thread = object:Thread("OKThread") {
+                override fun run() {
+                    try {
+
+                        while (true) {
+                            if (getOK()) {
+                                ok = true
+                                Log.d("test", "ok 받았다")
+                            }
+                            Thread.sleep(2000)
+                            ok = false
+                        }
+                    }catch (e: InterruptedException) {
+                        Thread.currentThread().interrupt()
+                    }
+                }
+            }
+            thread!!.start()
+        }
 
         initTTS()
         init()
@@ -83,6 +110,8 @@ class ChatActivity : AppCompatActivity() {
             speechRecognizer!!.cancel()
             speechRecognizer = null
         }
+
+        thread?.interrupt()
         super.onDestroy()
     }
 
@@ -160,18 +189,12 @@ class ChatActivity : AppCompatActivity() {
                 message += msg[i]
             }
             chatList.add(MyMessage(message, 1))
-            chatList.add(MyMessage("챗봇 응답", 0))
             messageadapter.setData(list = chatList)
         }
     }
-//    fun stopSTT() {
-//        if (speechRecognizer != null) {
-//            speechRecognizer!!.destroy()
-//            speechRecognizer!!.cancel()
-//            speechRecognizer = null
-//        }
-//    }
+
     private fun init(){
+        var message = intent.getStringExtra("data")
         val msg = intent.getStringExtra("message")
         messageadapter = MessageAdapter()
 
@@ -186,9 +209,11 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
-
         binding.recyclerMessages.adapter = messageadapter
 
+        binding.mic.setOnClickListener {
+            startSTT()
+        }
 
 //        chatList.add(MyMessage(msg.toString(), 1))
 //        chatList.add(MyMessage("챗봇 응답", 0))
@@ -197,34 +222,15 @@ class ChatActivity : AppCompatActivity() {
         binding.chatSendButton.setOnClickListener {
             if(binding.chatMessage.text.toString().isNotEmpty()){
                 chatList.add(MyMessage(binding.chatMessage.text.toString(), 1))
-                chatList.add(MyMessage("챗봇 응답", 0))
                 binding.chatMessage.text.clear()
                 messageadapter.setData(list = chatList)
                 binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
             }
         }
-
-        val thread = Thread(Runnable {
-            val timer = Timer()
-
-            timer.scheduleAtFixedRate(object : TimerTask() {
-                override fun run() {
-                    // 실행할 함수 호출
-                    if (getOK()){
-                        Log.d("test", "add : messages")
-                    }
-                }
-            }, 0, 2000)
-        })
-        thread.start();
-
-        binding.mic.setOnClickListener {
-            startSTT()
-        }
     }
 
     fun getOK() : Boolean {
-        var ok = false
+        var getok = false
         CoroutineScope(Dispatchers.Main).launch {
             val list = withContext(Dispatchers.IO) {
                 db.usernameDao().getUser() as ArrayList<Username>
@@ -239,13 +245,10 @@ class ChatActivity : AppCompatActivity() {
                         Log.d("test", "냉장고 응답요청 연결성공")
                         Log.d("test", code.toString())
                         if (code == 200) {
-                            ok = true
+                            getok = true
                             Log.d("test", response.body().toString())
                             getDialog()
-                            messageadapter.setData(list = chatList)
-                            messageadapter.notifyDataSetChanged()
                             binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
-
                         }
                         if (code == 202) {
                             Log.d("test", response.body().toString())
@@ -259,7 +262,7 @@ class ChatActivity : AppCompatActivity() {
 
                 })
         }
-        return ok
+        return getok
     }
 
     fun getDialog() : Boolean {
@@ -286,6 +289,7 @@ class ChatActivity : AppCompatActivity() {
                                 Log.d("test2", temp.toString())
                                 chatList.add(MyMessage(JSONObject(temp.toString()).getString("wimnchat"), 0))
                                 tts!!.speak(JSONObject(temp.toString()).getString("wimnchat"), TextToSpeech.QUEUE_ADD, null, "i1")
+                                messageadapter.setData(list = chatList)
                             }
 
                             Log.d("test", response.body().toString())
