@@ -12,3 +12,12 @@ data class PostParams(
     @SerializedName("userNo")
     val id: Int
 )
+
+data class ShoppingItem(
+    @SerializedName("foodName")
+    val foodName: String,
+    @SerializedName("reason")
+    val reason: String
+)
+
+

@@ -30,6 +30,6 @@ interface RetrofitService {
     @GET("dialog/popDialog/{userNo}")
     fun getDialog(@Path("userNo") number : Int) :Call<ResponseBody>
 
-    @GET("/user/flush/{userNo}")
+    @GET("user/flush/{userNo}")
     fun getExit(@Path("userNo") number : Int) :Call<ResponseBody>
 }

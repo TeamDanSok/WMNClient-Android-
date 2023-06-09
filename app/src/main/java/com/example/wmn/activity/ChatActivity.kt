@@ -14,13 +14,16 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
+import com.example.wmn.R
 import com.example.wmn.api.PostParams
 import com.example.wmn.api.RetrofitBuilder
+import com.example.wmn.api.ShoppingItem
 import com.example.wmn.api.UserInfo
 import com.example.wmn.recyclerView.MessageAdapter
 import com.example.wmn.chat.MyMessage
@@ -28,6 +31,8 @@ import com.example.wmn.databinding.ActivityChatBinding
 import com.example.wmn.firstRunActivity.AddfridgeActivity
 import com.example.wmn.roomDB.Username
 import com.example.wmn.roomDB.UsernameDatabase
+import com.google.gson.Gson
+import com.google.gson.JsonElement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +58,7 @@ class ChatActivity : AppCompatActivity() {
     var thread : Thread? = null
     var ok = false
     var body = ""
+    var delay = true
 
     private var tts: TextToSpeech? = null
     private var speechRecognizer : SpeechRecognizer? = null
@@ -69,7 +75,6 @@ class ChatActivity : AppCompatActivity() {
             thread = object:Thread("OKThread") {
                 override fun run() {
                     try {
-
                         while (true) {
                             getOK()
                             Thread.sleep(2000)
@@ -211,8 +216,7 @@ class ChatActivity : AppCompatActivity() {
 
         messageadapter.itemClickListener = object: MessageAdapter.OnItemClickListener {
             override fun OnChatBotClick(message: String) {
-                    Log.d("TTS", "I;m here")
-                    tts!!.speak(message, TextToSpeech.QUEUE_ADD, null, "i1")
+                tts?.stop()
             }
         }
 
@@ -309,9 +313,23 @@ class ChatActivity : AppCompatActivity() {
                             var respBody = JSONArray(response.body()?.string() )
                             for (i in 0..respBody.length()-1){
                                 var temp = respBody[i]
-                                Log.d("test2", temp.toString())
-                                chatList.add(MyMessage(JSONObject(temp.toString()).getString("wimnchat"), 0))
-                                tts!!.speak(JSONObject(temp.toString()).getString("wimnchat"), TextToSpeech.QUEUE_ADD, null, "i1")
+                                var type = JSONObject(temp.toString()).getInt("types")
+                                var message = JSONObject(temp.toString()).getString("wimnchat")
+
+                                if(type == 1) {
+                                    message = recipe(message)
+                                } else if (type == 2) {
+                                    message = shoppingList(message)
+                                }
+
+                                //Log.d("test", temp.toString())
+                                chatList.add(MyMessage(message, 0))
+                                tts!!.speak(
+                                    message,
+                                    TextToSpeech.QUEUE_ADD,
+                                    null,
+                                    "i1"
+                                )
                                 messageadapter.setData(list = chatList)
                                 binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
                             }
@@ -356,7 +374,7 @@ class ChatActivity : AppCompatActivity() {
             val list = withContext(Dispatchers.IO) {
                 db.usernameDao().getUser() as ArrayList<Username>
             }
-            RetrofitBuilder.api.getDialog(list[0].uId)
+            RetrofitBuilder.api.getExit(list[0].uId)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onResponse(
                         call: Call<ResponseBody>, response: Response<ResponseBody>
@@ -371,4 +389,62 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
+    fun waitDialog() {
+        if(delay) {
+            AlertDialog.Builder(this)
+                .setView(R.layout.wait_dialog)
+                .create()
+                .show()
+        }
+    }
+
+    fun shoppingList(message: String) : String {
+        var newMessage = ""
+        try {
+            val jsonObject = JSONObject(message)
+            val shoppingListArray = jsonObject.getJSONArray("shoppingList")
+
+            val shoppingList = mutableListOf<ShoppingItem>()
+
+            for (i in 0 until shoppingListArray.length()) {
+                val itemObject = shoppingListArray.getJSONObject(i)
+                val foodName = itemObject.getString("foodName")
+                val reason = itemObject.getString("reason")
+
+                val shoppingItem = ShoppingItem(foodName, reason)
+                shoppingList.add(shoppingItem)
+            }
+
+            newMessage = "쇼핑리스트 입니다.\n"
+            for (item in shoppingList) {
+                newMessage += "\n- ${item.foodName} : ${item.reason}"
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+        return newMessage
+    }
+
+    fun recipe(message: String) : String {
+        var newMessage = ""
+        try {
+            val jsonObject = JSONObject(message)
+            val recipeName = jsonObject.getString("recipeName")
+            val processArray = jsonObject.getJSONArray("process")
+
+            newMessage = "레시피 이름 : $recipeName\n"
+
+            for (i in 0 until processArray.length()) {
+                val step = processArray.getString(i)
+                newMessage += "\n$step"
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+        return newMessage
+    }
+
 }
+
