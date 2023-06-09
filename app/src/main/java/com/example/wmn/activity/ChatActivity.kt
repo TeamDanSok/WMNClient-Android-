@@ -1,5 +1,6 @@
 package com.example.wmn.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,17 +10,22 @@ import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
+import com.example.wmn.api.PostParams
 import com.example.wmn.api.RetrofitBuilder
+import com.example.wmn.api.UserInfo
 import com.example.wmn.recyclerView.MessageAdapter
 import com.example.wmn.chat.MyMessage
 import com.example.wmn.databinding.ActivityChatBinding
+import com.example.wmn.firstRunActivity.AddfridgeActivity
 import com.example.wmn.roomDB.Username
 import com.example.wmn.roomDB.UsernameDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -65,12 +71,8 @@ class ChatActivity : AppCompatActivity() {
                     try {
 
                         while (true) {
-                            if (getOK()) {
-                                ok = true
-                                Log.d("test", "ok 받았다")
-                            }
+                            getOK()
                             Thread.sleep(2000)
-                            ok = false
                         }
                     }catch (e: InterruptedException) {
                         Thread.currentThread().interrupt()
@@ -219,13 +221,32 @@ class ChatActivity : AppCompatActivity() {
 //        chatList.add(MyMessage("챗봇 응답", 0))
         messageadapter.setData(list = chatList)
 
-        binding.chatSendButton.setOnClickListener {
-            if(binding.chatMessage.text.toString().isNotEmpty()){
-                chatList.add(MyMessage(binding.chatMessage.text.toString(), 1))
-                binding.chatMessage.text.clear()
-                messageadapter.setData(list = chatList)
-                binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
+        binding.chatMessage.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                sendMessage()
+                return@setOnEditorActionListener true
             }
+            return@setOnEditorActionListener false
+        }
+
+        binding.chatSendButton.setOnClickListener {
+            sendMessage()
+        }
+        binding.moveScreen.setOnClickListener {
+            val intent = Intent(this@ChatActivity, ListActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    fun sendMessage() {
+        var message = binding.chatMessage.text.toString()
+        if(message.isNotEmpty()) {
+            message = message.trim()
+            chatList.add(MyMessage(message, 1))
+            binding.chatMessage.text.clear()
+            messageadapter.setData(list = chatList)
+            binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
+            ask(message)
         }
     }
 
@@ -246,12 +267,11 @@ class ChatActivity : AppCompatActivity() {
                         Log.d("test", code.toString())
                         if (code == 200) {
                             getok = true
-                            Log.d("test", response.body().toString())
                             getDialog()
                             binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
                         }
-                        if (code == 202) {
-                            Log.d("test", response.body().toString())
+                        if (code == 204) {
+                            ok = true
                         }
                     }
 
@@ -264,14 +284,13 @@ class ChatActivity : AppCompatActivity() {
         }
         return getok
     }
-
     fun getDialog() : Boolean {
         var responses = false;
         CoroutineScope(Dispatchers.Main).launch {
             val list = withContext(Dispatchers.IO) {
                 db.usernameDao().getUser() as ArrayList<Username>
             }
-            Log.d("test", list[0].uId.toString())
+            //Log.d("test", list[0].uId.toString())
             RetrofitBuilder.api.getDialog(list[0].uId)
                 .enqueue(object : Callback<ResponseBody> {
                     override fun onResponse(
@@ -283,13 +302,13 @@ class ChatActivity : AppCompatActivity() {
                         if (code == 200) {
 
                             var respBody = JSONArray(response.body()?.string() )
-                            Log.d("test", respBody.toString())
                             for (i in 0..respBody.length()-1){
                                 var temp = respBody[i]
                                 Log.d("test2", temp.toString())
                                 chatList.add(MyMessage(JSONObject(temp.toString()).getString("wimnchat"), 0))
                                 tts!!.speak(JSONObject(temp.toString()).getString("wimnchat"), TextToSpeech.QUEUE_ADD, null, "i1")
                                 messageadapter.setData(list = chatList)
+                                binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
                             }
 
                             Log.d("test", response.body().toString())
@@ -303,6 +322,32 @@ class ChatActivity : AppCompatActivity() {
                 })
         }
         return responses
+    }
+
+    private fun ask(dialog : String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val list = withContext(Dispatchers.IO) {
+                db.usernameDao().getUser() as ArrayList<Username>
+            }
+            list[0].uId
+            var input = PostParams(dialog,list[0].uId)
+            RetrofitBuilder.api.postAsk(input).enqueue(object : Callback<ResponseBody>{
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    Log.d("test", "냉장고 질문 성공")
+                    Log.d("test", response.code().toString())
+                    Log.d("test", response.body().toString())
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                }
+
+            })
+        }
+
     }
 
 }

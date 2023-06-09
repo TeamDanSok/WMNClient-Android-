@@ -22,6 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.Timer
 import java.util.TimerTask
+import kotlin.math.log
 
 class StartActivity : AppCompatActivity() {
     lateinit var binding: ActivityStartBinding
@@ -53,26 +54,22 @@ class StartActivity : AppCompatActivity() {
         else{
             //두번째 실행
             init()
-            if (thread == null) {
-                thread = object:Thread("OKThread") {
-                    override fun run() {
-                        try {
-
-                            while (true) {
-                                if (getOK()) {
-                                    ok = true
-                                    Log.d("test", "ok 받았다")
-                                }
-                                Thread.sleep(2000)
-                                ok = false
-                            }
-                        }catch (e: InterruptedException) {
-                            Thread.currentThread().interrupt()
-                        }
-                    }
-                }
-                thread!!.start()
-            }
+//            if (thread == null) {
+//                thread = object:Thread("OKThread") {
+//                    override fun run() {
+//                        try {
+//
+//                            while (true) {
+//                                getOK()
+//                                Thread.sleep(2000)
+//                            }
+//                        }catch (e: InterruptedException) {
+//                            Thread.currentThread().interrupt()
+//                        }
+//                    }
+//                }
+//                thread!!.start()
+//            }
 //            val intent = Intent(this@StartActivity, ThreadService::class.java)
 //            startService(intent)
         }
@@ -81,7 +78,7 @@ class StartActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        thread?.interrupt()
+        //thread?.interrupt()
 //        val intent = Intent(this@StartActivity, ThreadService::class.java)
 //        stopService(intent)
         super.onDestroy()
@@ -90,44 +87,46 @@ class StartActivity : AppCompatActivity() {
     fun init(){
         db = UsernameDatabase.getDatabase(this)
         binding.Button.setOnClickListener {
-            if (ok) {
+            Log.d("test", ok.toString())
                 getOpening()
                 val intent = Intent(this@StartActivity, ChatActivity::class.java)
                 intent.putExtra("data", body)
                 startActivity(intent)
-            }
         }
         binding.textView2.setOnClickListener {
-            if (ok) {
                 getOpening()
                 val intent = Intent(this@StartActivity, ChatActivity::class.java)
                 intent.putExtra("data", body)
                 startActivity(intent)
-            }
         }
     }
-    private fun getOpening() {
+    private fun getOpening() : Boolean {
+       var success = false
         CoroutineScope(Dispatchers.Main).launch {
             val list = withContext(Dispatchers.IO) {
                 db.usernameDao().getUser() as ArrayList<Username>
             }
-            Log.d("test", list[0].uId.toString())
-            RetrofitBuilder.api.getOpening(list[0].uId).enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>, response: Response<ResponseBody>
-                ) {
-                    Log.d("test", "냉장고 오프닝 연결성공")
-                    Log.d("test", response.code().toString())
-                    body = response.body().toString()
+            //Log.d("test", list[0].uId.toString())
+            RetrofitBuilder.api.getOpening(list[0].uId)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>, response: Response<ResponseBody>
+                    ) {
+                        Log.d("test", "냉장고 오프닝 연결성공")
+                        Log.d("test", response.code().toString())
+                        body = response.body().toString()
+                        success = true
 
-                }
+                    }
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.d("test", "연결실패")
-                }
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Log.d("test", "연결실패")
+                        success = false
+                    }
 
-            })
+                })
         }
+        return success
     }
 //    inner class ProgressThread:Thread() {
 //        override fun run() {
@@ -137,37 +136,32 @@ class StartActivity : AppCompatActivity() {
 //                    binding.progressBar.progress = 0
 
 
-    fun getOK() : Boolean {
-        var getok = false;
-        CoroutineScope(Dispatchers.Main).launch {
-            val list = withContext(Dispatchers.IO) {
-                db.usernameDao().getUser() as ArrayList<Username>
-            }
-            Log.d("test", list[0].uId.toString())
-            RetrofitBuilder.api.getOK(list[0].uId)
-                .enqueue(object : Callback<ResponseBody> {
-                    override fun onResponse(
-                        call: Call<ResponseBody>, response: Response<ResponseBody>
-                    ) {
-                        val code = response.code()
-                        Log.d("test", "냉장고 응답요청 연결성공")
-                        Log.d("test", code.toString())
-                        if (code == 200) {
-                            getok = true
-                            Log.d("test", response.body().toString())
-                        }
-                        if (code == 202) {
-                            getok = true
-                            Log.d("test", response.body().toString())
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        Log.d("test", "연결실패")
-                    }
-
-                })
-        }
-        return getok
-    }
+//    fun getOK() {
+//        CoroutineScope(Dispatchers.Main).launch {
+//            val list = withContext(Dispatchers.IO) {
+//                db.usernameDao().getUser() as ArrayList<Username>
+//            }
+//            Log.d("test", list[0].uId.toString())
+//            RetrofitBuilder.api.getOK(list[0].uId)
+//                .enqueue(object : Callback<ResponseBody> {
+//                    override fun onResponse(
+//                        call: Call<ResponseBody>, response: Response<ResponseBody>
+//                    ) {
+//                        val code = response.code()
+//                        Log.d("test", "냉장고 응답요청 연결성공")
+//                        Log.d("test", code.toString())
+//                        if (code == 200 || code == 204) {
+//                            ok = true
+//                        } else {
+//                            ok = false
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                        Log.d("test", "연결실패")
+//                    }
+//
+//                })
+//        }
+//    }
 }

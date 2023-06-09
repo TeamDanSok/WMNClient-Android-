@@ -15,6 +15,9 @@ interface RetrofitService {
     @POST("user/register")
     fun postUser(@Body params: HashMap<String, String>) : Call<UserInfo>
 
+    @POST("user/ask")
+    fun postAsk(@Body params: PostParams) : Call<ResponseBody>
+
     @GET("user/initNang/{userNo}")
     fun getNang(@Path("userNo") number : Int) :Call<ResponseBody>
 
