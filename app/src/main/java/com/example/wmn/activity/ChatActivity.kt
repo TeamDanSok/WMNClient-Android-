@@ -195,6 +195,8 @@ class ChatActivity : AppCompatActivity() {
             }
             chatList.add(MyMessage(message, 1))
             messageadapter.setData(list = chatList)
+            binding.recyclerMessages.scrollToPosition(messageadapter.itemCount - 1)
+            ask(message)
         }
     }
 
