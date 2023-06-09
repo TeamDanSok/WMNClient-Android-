@@ -114,6 +114,9 @@ class ChatActivity : AppCompatActivity() {
         }
 
         thread?.interrupt()
+
+        getExit()
+
         super.onDestroy()
     }
 
@@ -340,14 +343,30 @@ class ChatActivity : AppCompatActivity() {
                     Log.d("test", response.code().toString())
                     Log.d("test", response.body().toString())
                 }
-
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
                 }
-
             })
         }
+    }
 
+    fun getExit()  {
+        CoroutineScope(Dispatchers.Main).launch {
+            val list = withContext(Dispatchers.IO) {
+                db.usernameDao().getUser() as ArrayList<Username>
+            }
+            RetrofitBuilder.api.getDialog(list[0].uId)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>, response: Response<ResponseBody>
+                    ) {
+                        val code = response.code()
+                        Log.d("test", "냉장고 종료 연결성공")
+                    }
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Log.d("test", "연결실패")
+                    }
+                })
+        }
     }
 
 }

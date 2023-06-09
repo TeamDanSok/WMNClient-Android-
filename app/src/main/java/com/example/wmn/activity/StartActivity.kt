@@ -78,9 +78,8 @@ class StartActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        //thread?.interrupt()
-//        val intent = Intent(this@StartActivity, ThreadService::class.java)
-//        stopService(intent)
+        thread?.interrupt()
+
         super.onDestroy()
     }
 
