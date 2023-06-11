@@ -13,8 +13,7 @@ class ListActivity : AppCompatActivity() {
 
 
 
-    val foodList = arrayOf("비엔나 소세지", "불고기 600g", "하인즈 케찹", "수지스 닭가슴살",
-            "양파", "당근", "오이")
+    val foodList = arrayOf("삼겹살", "대파", "양파", "고추가루")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
